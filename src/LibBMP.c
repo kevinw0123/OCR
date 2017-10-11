@@ -518,7 +518,7 @@ void extractText(char *filename){
 	int originalWidth,originalHeight;
 	CutBitmapArgs *argsPtr = malloc(sizeof(CutBitmapArgs));
 	if(argsPtr == NULL){
-		printf("Could not allocate sufficeint memory.\n");
+		printf("Could not allocate sufficient memory.\n");
 		exit(EXIT_FAILURE);
 	}
 	
@@ -550,15 +550,9 @@ void extractText(char *filename){
 		}
 	}
 
-	printf("\nilosc lini - 'number of lines': %d\n", countLines);
+	printf("\nNumber of lines: %d\n", countLines);
 
-	// pthread_t *Threads = malloc( sizeof(pthread_t) * (countLines+1) );
-	pthread_t *Threads;
-	for (int i = 0; i < (countLines+1); i++) {
-		Threads[i] = malloc(sizeof(pthread_t));
-	}
- 
-	printf("HELLO ERRBODY");
+	pthread_t* Threads = malloc(sizeof(pthread_t)*(countLines+1));
 
 	if(Threads == NULL){
 		printf("Could not allocate sufficient memory.\n");
@@ -566,6 +560,7 @@ void extractText(char *filename){
 	}
 
 	CutBitmapArgs *args = malloc(sizeof(CutBitmapArgs)*(countLines+1));
+
 	if(args == NULL){
 		printf("Could not allocate sufficient memory.\n");
 		exit(EXIT_FAILURE);
@@ -609,13 +604,17 @@ void extractText(char *filename){
                 exit(1);
         }
 
+
+
 	for(i = countLines - 1; i>=0; i--){
 		if(pthread_join(Threads[i],&status)){
 			printf("Error while ending thread ");
 			abort();
 		};
 		//printf(" %d %s",i, (char *)status);
-		fprintf(f,"%s",(char *)status);
+		printf(" %d \n", i);//%s",i, (char *)status);
+
+		// fprintf(f,"%s",(char *)status);
 	}
 	
 	
